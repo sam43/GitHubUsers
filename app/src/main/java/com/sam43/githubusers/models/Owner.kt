@@ -17,7 +17,6 @@ data class Owner(
     @SerializedName("") val organizations_url: String,
     @SerializedName("") val received_events_url: String,
     @SerializedName("") val repos_url: String,
-    @SerializedName("") val site_admin: Boolean,
     @SerializedName("") val starred_url: String,
     @SerializedName("") val subscriptions_url: String,
     @SerializedName("") val type: String,*/
