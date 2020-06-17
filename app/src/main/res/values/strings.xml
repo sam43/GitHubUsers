@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">GitHubUsers</string>
     <string name="github_user_avatar">Github user avatar</string>
+    <string name="user_id_placeholder">User ID: </string>
+    <string name="btn_title">See on Github</string>
+    <string name="detail_page_user_info">Detail page user info</string>
+    <string name="githubId">Github ID: %s</string>
+    <string name="sample">https://i.imgur.com/H6PWt20.png</string>
 </resources>

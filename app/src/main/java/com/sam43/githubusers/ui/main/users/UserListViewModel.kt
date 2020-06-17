@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 open class UserListViewModel(private val repo: UserRepo) : BaseViewModel() {
 
     open val usersLiveData = MutableLiveData<MutableList<GithubUser?>>()
+    open val singleUserLiveData = MutableLiveData<GithubUser?>()
 
     fun fetchUsers() {
         scope.launch {
@@ -18,6 +19,8 @@ open class UserListViewModel(private val repo: UserRepo) : BaseViewModel() {
             usersLiveData.postValue(users)
         }
     }
+
+    fun setUser(user: GithubUser) {singleUserLiveData.value = user}
 
     open fun isUserListNull(): Boolean = usersLiveData.value != null
 

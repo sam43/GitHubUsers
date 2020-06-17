@@ -4,8 +4,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class GithubUser(
-    @SerializedName("id") val id: Int,
-    @SerializedName("name") val name: String,
-    @SerializedName("full_name") val full_name: String,
-    @SerializedName("owner") val owner: Owner
+    @SerializedName("id") var id: Int? = null,
+    @SerializedName("name") var name: String? = null,
+    @SerializedName("full_name") var full_name: String? = null,
+    @SerializedName("html_url") var html_url: String? = null,
+    @SerializedName("owner") var owner: Owner
 ): Serializable

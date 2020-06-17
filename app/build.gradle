@@ -32,6 +32,9 @@ android {
     kapt {
         generateStubs = true
     }
+    dataBinding {
+        enabled = true
+    }
     kotlinOptions.jvmTarget = '1.8'
 
 }
