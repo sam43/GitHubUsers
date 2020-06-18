@@ -20,9 +20,12 @@ data class GithubUser(
     @SerializedName("full_name")
     @ColumnInfo(name = "full_name")
     var full_name: String? = null,
+    @SerializedName("url")
+    @ColumnInfo(name = "url")
+    var url: String? = null,
     @SerializedName("html_url")
     @ColumnInfo(name = "html_url")
     var html_url: String? = null
-    //@SerializedName("owner")
-    //var owner: Owner
+    /*@SerializedName("owner")
+    var owner: Owner*/
 ): Serializable

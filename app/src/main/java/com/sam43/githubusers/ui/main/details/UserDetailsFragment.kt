@@ -54,6 +54,7 @@ class UserDetailsFragment : Fragment() {
         tvGithubID.text = user?.id.toString()
         tvGithubName.text = user?.name
         tvGithubFullName.text = user?.full_name
+        tvProfileUrl.text = user?.html_url
 
         btnProfileLink.setOnClickListener {
             val openURL = Intent(Intent.ACTION_VIEW)
