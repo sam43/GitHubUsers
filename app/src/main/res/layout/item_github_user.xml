@@ -28,7 +28,7 @@
             android:layout_marginEnd="16dp"
             android:layout_centerVertical="true"
             tools:src="@drawable/ic_android"
-            app:imageUrl="@{@string/sample}"
+            app:imageUrl="@{user.owner.avatar_url}"
             android:layout_marginRight="16dp"
             android:contentDescription="@string/github_user_avatar" />
         <TextView

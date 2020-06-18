@@ -1,6 +1,5 @@
 package com.sam43.githubusers.ui.main.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,7 +13,10 @@ import com.sam43.githubusers.models.GithubUser
 
 
 @Suppress("UNCHECKED_CAST")
-class UserAdapter(val context: Context, private val userList: MutableList<GithubUser?>, private val clickListener: (GithubUser) -> Unit) :
+class UserAdapter(
+    private val userList: MutableList<GithubUser?>,
+    private val clickListener: (GithubUser) -> Unit
+) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
@@ -30,15 +32,17 @@ class UserAdapter(val context: Context, private val userList: MutableList<Github
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val item = userList[position]
         holder.itemGithubUserBinding.user = item
-        holder.bind(context, item, clickListener as (GithubUser?) -> Unit)
+        holder.bind(item, clickListener as (GithubUser?) -> Unit)
     }
 
-    override fun getItemCount() = userList.size
+    override fun getItemCount(): Int {
+        return if (!userList.isNullOrEmpty()) userList.size else 0
+    }
 
     inner class UserViewHolder(val itemGithubUserBinding: ItemGithubUserBinding) :
         RecyclerView.ViewHolder(itemGithubUserBinding.root)
     {
-        fun bind(context: Context, item: GithubUser?, clickListener: (GithubUser?) -> Unit) {
+        fun bind(item: GithubUser?, clickListener: (GithubUser?) -> Unit) {
             itemView.setOnClickListener { clickListener(item)}
         }
 

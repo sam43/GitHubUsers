@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.sam43.githubusers.R
 import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.ui.utils.getViewModel
+import com.sam43.githubusers.ui.utils.loadUserAvatar
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {
@@ -50,8 +51,8 @@ class UserDetailsFragment : Fragment() {
     }
 
     private fun updateViewsWith(user: GithubUser?) {
-        //requireContext().loadUserAvatar(user?.owner?.avatar_url, ivUserAvatar)
-        tvGithubID.text = user?.id.toString()
+        requireContext().loadUserAvatar(user?.owner?.avatar_url, ivUserAvatar)
+        tvGithubID.text = requireContext().getString(R.string.githubId, user?.id.toString())
         tvGithubName.text = user?.name
         tvGithubFullName.text = user?.full_name
         tvProfileUrl.text = user?.html_url

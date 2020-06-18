@@ -77,7 +77,8 @@ class UserListFragment : Fragment() {
     }
 
     private fun populateWithData(userList: MutableList<GithubUser?>) {
-        rv_github_users.adapter = UserAdapter(requireContext(), userList) { userItem : GithubUser -> userItemClicked(userItem) }
+        rv_github_users.adapter =
+            UserAdapter(userList) { userItem: GithubUser -> userItemClicked(userItem) }
         setupLayoutManager()
     }
 
@@ -87,7 +88,7 @@ class UserListFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         viewModel.cancelAllRequests()
+        super.onDestroy()
     }
 }

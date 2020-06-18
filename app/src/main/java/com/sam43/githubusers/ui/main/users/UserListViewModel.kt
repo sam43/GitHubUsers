@@ -2,7 +2,8 @@ package com.sam43.githubusers.ui.main.users
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -49,10 +50,22 @@ open class UserListViewModel(private val repo: UserRepo) : BaseViewModel() {
     }
 
     private fun isInternetConnected(): Boolean {
-        val cm = App.applicationContext()
+        val isInternetConnected: Boolean
+        val connectivityManager = App.applicationContext()
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        val isInternetConnected = activeNetwork?.isConnectedOrConnecting == true
+        isInternetConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nw = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+            when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+        } else {
+            val nwInfo = connectivityManager.activeNetworkInfo ?: return false
+            nwInfo.isConnected
+        }
+
         isInternetConnectedLiveData.postValue(isInternetConnected)
         return isInternetConnected
     }
