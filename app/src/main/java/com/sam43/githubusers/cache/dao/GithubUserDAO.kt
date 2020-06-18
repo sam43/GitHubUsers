@@ -1,7 +1,6 @@
-package com.sam43.githubusers.cache
+package com.sam43.githubusers.cache.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,7 +11,7 @@ import com.sam43.githubusers.models.GithubUser
 interface GithubUserDAO {
 
     @Query("SELECT * FROM GithubUser")
-    fun getAllUsers(): MutableLiveData<MutableList<GithubUser?>?>?
+    fun getAllUsers(): LiveData<MutableList<GithubUser?>?>?
 
     @Query("SELECT * FROM GithubUser LIMIT :limit OFFSET :offset")
     fun getPaginatedUserList(offset: Int, limit: Int): LiveData<MutableList<GithubUser?>?>?

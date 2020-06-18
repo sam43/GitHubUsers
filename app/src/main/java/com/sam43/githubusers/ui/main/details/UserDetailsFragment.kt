@@ -3,16 +3,14 @@ package com.sam43.githubusers.ui.main.details
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-
 import com.sam43.githubusers.R
 import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.ui.utils.getViewModel
-import com.sam43.githubusers.ui.utils.loadUserAvatar
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {
@@ -42,6 +40,10 @@ class UserDetailsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        callViewModelVariables()
+    }
+
+    private fun callViewModelVariables() {
         viewModel.userDetailLiveData.observe(viewLifecycleOwner, Observer {
             updateViewsWith(it)
         })

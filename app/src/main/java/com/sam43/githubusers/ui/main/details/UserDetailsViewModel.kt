@@ -6,10 +6,10 @@ import com.sam43.githubusers.ui.utils.BaseViewModel
 
 class UserDetailsViewModel : BaseViewModel() {
 
-    open val userDetailLiveData = MutableLiveData<GithubUser?>()
+    val userDetailLiveData = MutableLiveData<GithubUser?>()
 
     fun setUserDetail(user: GithubUser) {
-        userDetailLiveData.value = user
+        userDetailLiveData.postValue(user)
     }
 
 }

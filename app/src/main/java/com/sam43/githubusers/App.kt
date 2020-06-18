@@ -2,6 +2,7 @@ package com.sam43.githubusers
 
 import android.app.Application
 import android.content.Context
+import com.sam43.githubusers.cache.database.CacheDatabase
 
 class App : Application() {
 
@@ -24,5 +25,6 @@ class App : Application() {
         // Use ApplicationContext.
         // example: SharedPreferences etc...
         val context: Context? = applicationContext()
+        context?.let { CacheDatabase.getInstance(it) }
     }
 }

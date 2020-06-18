@@ -64,11 +64,11 @@ class UserListFragment : Fragment() {
         populateWithData(it)
     }
 
-    private val observerCheckConnection = Observer<Boolean> { connected ->
-        if (connected)
-            requireContext().pop("Connected")
-        else
+    private val observerCheckConnection = Observer<Boolean> { isConnected ->
+        if (!isConnected) {
             requireContext().pop("Waiting for internet connection")
+        } else
+            requireContext().pop("Connected")
     }
 
     private fun callViewModelMethods() {

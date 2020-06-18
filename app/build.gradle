@@ -71,6 +71,7 @@ dependencies {
     androidTestImplementation "android.arch.persistence.room:testing:$roomVersion"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
     // material
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"

@@ -2,7 +2,7 @@ package com.sam43.githubusers.repositories
 
 import androidx.lifecycle.LiveData
 import com.sam43.githubusers.App.Companion.applicationContext
-import com.sam43.githubusers.cache.CacheDatabase
+import com.sam43.githubusers.cache.database.CacheDatabase
 import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.services.BaseRepository
 import com.sam43.githubusers.services.ServiceApi
@@ -27,12 +27,12 @@ open class UserRepo(private val api : ServiceApi): BaseRepository() {
         return response?.toMutableList()
     }
 
-    fun getGithubUserListOffline(): MutableList<GithubUser?>? {
+    fun getGithubUserListOffline(): LiveData<MutableList<GithubUser?>?>? {
         var liveData: LiveData<MutableList<GithubUser?>?>?
         appDB?.githubUserDao?.getAllUsers().let {
             liveData = it
         }
-        return liveData?.value
+        return liveData
     }
 
 }
