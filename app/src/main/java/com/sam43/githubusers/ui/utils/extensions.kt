@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.sam43.githubusers.R
 
 inline fun <reified T : ViewModel> Fragment.getViewModel(noinline creator: (() -> T)? = null): T {
     return if (creator == null)
@@ -29,16 +30,20 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(noinline creato
 }
 
 fun Context.loadUserAvatar(url: String?, holder: ImageView) {
-    Glide.with(this)
-        .load(url)
-        .transition(DrawableTransitionOptions.withCrossFade(200))
-        .apply(
-            RequestOptions.placeholderOf(0)
-                .error(android.R.drawable.ic_menu_gallery)
-                .dontAnimate().diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-        )
-        .into(holder)
+    if (url != null) {
+        Glide.with(this)
+            .load(url)
+            .transition(DrawableTransitionOptions.withCrossFade(200))
+            .apply(
+                RequestOptions.placeholderOf(0)
+                    .error(R.drawable.ic_android)
+                    .dontAnimate().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .skipMemoryCache(true)
+            )
+            .into(holder)
+    } else {
+        holder.setImageResource(R.drawable.ic_android)
+    }
 }
 
 fun Context.pop(msg: String) =

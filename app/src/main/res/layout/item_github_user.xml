@@ -28,7 +28,7 @@
             android:layout_marginEnd="16dp"
             android:layout_centerVertical="true"
             tools:src="@drawable/ic_android"
-            app:image='@{@string/sample}'
+            app:imageUrl="@{user.owner.avatar_url}"
             android:layout_marginRight="16dp"
             android:contentDescription="@string/github_user_avatar" />
         <TextView
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/user_avatar"
-            android:text='@{@string/githubId(user.id.toString())}'
+            android:text='@{@string/githubId(user.id)}'
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
