@@ -11,7 +11,7 @@ import com.sam43.githubusers.App
 import com.sam43.githubusers.cache.database.CacheDatabase
 import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.repositories.UserRepo
-import com.sam43.githubusers.ui.utils.BaseViewModel
+import com.sam43.githubusers.ui.factory.BaseViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 

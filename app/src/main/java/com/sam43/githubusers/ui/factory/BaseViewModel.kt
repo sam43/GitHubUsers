@@ -1,4 +1,4 @@
-package com.sam43.githubusers.ui.utils
+package com.sam43.githubusers.ui.factory
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope

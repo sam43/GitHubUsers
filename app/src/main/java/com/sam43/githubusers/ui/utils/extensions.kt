@@ -14,19 +14,26 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.sam43.githubusers.R
+import com.sam43.githubusers.ui.factory.ViewModelFactory
 
 inline fun <reified T : ViewModel> Fragment.getViewModel(noinline creator: (() -> T)? = null): T {
     return if (creator == null)
         ViewModelProvider(this).get(T::class.java)
     else
-        ViewModelProvider(this, ViewModelFactory(creator)).get(T::class.java)
+        ViewModelProvider(
+            this,
+            ViewModelFactory(creator)
+        ).get(T::class.java)
 }
 
 inline fun <reified T : ViewModel> FragmentActivity.getViewModel(noinline creator: (() -> T)? = null): T {
     return if (creator == null)
         ViewModelProvider(this).get(T::class.java)
     else
-        ViewModelProvider(this, ViewModelFactory(creator)).get(T::class.java)
+        ViewModelProvider(
+            this,
+            ViewModelFactory(creator)
+        ).get(T::class.java)
 }
 
 fun Context.loadUserAvatar(url: String?, holder: ImageView) {

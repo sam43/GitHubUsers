@@ -12,8 +12,8 @@ import com.sam43.githubusers.R
 import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.repositories.UserRepo
 import com.sam43.githubusers.services.ApiFactory
+import com.sam43.githubusers.ui.communicators.Communicator
 import com.sam43.githubusers.ui.main.adapters.UserAdapter
-import com.sam43.githubusers.ui.utils.Communicator
 import com.sam43.githubusers.ui.utils.getViewModel
 import com.sam43.githubusers.ui.utils.pop
 import kotlinx.android.synthetic.main.user_list_fragment.*

@@ -1,16 +1,17 @@
 package com.sam43.githubusers.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.sam43.githubusers.R
 import com.sam43.githubusers.models.GithubUser
+import com.sam43.githubusers.ui.communicators.Communicator
 import com.sam43.githubusers.ui.main.details.UserDetailsFragment
 import com.sam43.githubusers.ui.main.users.UserListFragment
-import com.sam43.githubusers.ui.utils.Communicator
 import java.io.Serializable
 
-class MainActivity : AppCompatActivity(), Communicator {
+class MainActivity : AppCompatActivity(),
+    Communicator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
