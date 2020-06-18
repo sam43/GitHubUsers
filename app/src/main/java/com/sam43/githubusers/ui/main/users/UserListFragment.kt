@@ -13,7 +13,9 @@ import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.repositories.UserRepo
 import com.sam43.githubusers.services.ApiFactory
 import com.sam43.githubusers.ui.main.adapters.UserAdapter
-import com.sam43.githubusers.ui.utils.*
+import com.sam43.githubusers.ui.utils.Communicator
+import com.sam43.githubusers.ui.utils.getViewModel
+import com.sam43.githubusers.ui.utils.pop
 import kotlinx.android.synthetic.main.user_list_fragment.*
 
 
@@ -54,19 +56,28 @@ class UserListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.usersLiveData.observe(viewLifecycleOwner, Observer {
-            try {
-                Log.d("GithubUsers", "data: ${it[0]}")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            populateWithData(it)
-        })
+        callViewModelMethods()
+    }
+
+    private val observerPopulateList = Observer<MutableList<GithubUser?>> {
+        Log.d("GithubUsers", "data: ${it[0]}")
+        populateWithData(it)
+    }
+
+    private val observerCheckConnection = Observer<Boolean> { connected ->
+        if (connected)
+            requireContext().pop("Connected")
+        else
+            requireContext().pop("Waiting for internet connection")
+    }
+
+    private fun callViewModelMethods() {
+        viewModel.isInternetConnectedLiveData.observe(viewLifecycleOwner, observerCheckConnection)
+        viewModel.usersLiveData.observe(viewLifecycleOwner, observerPopulateList)
     }
 
     private fun populateWithData(userList: MutableList<GithubUser?>) {
         rv_github_users.adapter = UserAdapter(requireContext(), userList) { userItem : GithubUser -> userItemClicked(userItem) }
-        //rv_github_users.adapter = UserAdapterNormal(requireContext(), userList, this)
         setupLayoutManager()
     }
 
@@ -79,9 +90,4 @@ class UserListFragment : Fragment() {
         super.onDestroy()
         viewModel.cancelAllRequests()
     }
-
-    /*override fun onRecyclerViewItemClick(view: View, user: GithubUser?) {
-        user?.let { userItemClicked(it) }
-    }*/
-
 }
