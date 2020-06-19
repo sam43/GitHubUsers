@@ -10,8 +10,12 @@ import com.sam43.githubusers.models.GithubUser
 @Dao
 interface GithubUserDAO {
 
+    /*@Query("SELECT * FROM GithubUser")
+    fun getAllUsers(): LiveData<List<GithubUser?>?>?*/
+    // DAO doesn't work with MutableList
+
     @Query("SELECT * FROM GithubUser")
-    fun getAllUsers(): LiveData<MutableList<GithubUser?>?>?
+    fun getAllUsers(): List<GithubUser?>
 
     @Query("SELECT * FROM GithubUser LIMIT :limit OFFSET :offset")
     fun getPaginatedUserList(offset: Int, limit: Int): LiveData<MutableList<GithubUser?>?>?

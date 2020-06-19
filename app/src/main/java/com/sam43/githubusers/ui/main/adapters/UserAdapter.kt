@@ -14,7 +14,7 @@ import com.sam43.githubusers.models.GithubUser
 
 @Suppress("UNCHECKED_CAST")
 class UserAdapter(
-    private val userList: MutableList<GithubUser?>,
+    private val userList: List<GithubUser?>?,
     private val clickListener: (GithubUser) -> Unit
 ) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -30,7 +30,7 @@ class UserAdapter(
         )
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val item = userList[position]
+        val item = userList?.get(position)
         holder.itemGithubUserBinding.user = item
         holder.bind(item, clickListener as (GithubUser?) -> Unit)
     }

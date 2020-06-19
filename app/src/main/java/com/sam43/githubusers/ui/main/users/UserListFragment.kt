@@ -65,8 +65,8 @@ class UserListFragment : Fragment() {
         callViewModelMethods()
     }
 
-    private val observerPopulateList = Observer<MutableList<GithubUser?>> {
-        Log.d("GithubUsers", "data: ${it[0]}")
+    private val observerPopulateList = Observer<List<GithubUser?>?> {
+        Log.d("GithubUsers", "data: ${it?.get(0)}")
         populateWithData(it)
     }
 
@@ -82,19 +82,14 @@ class UserListFragment : Fragment() {
         viewModel.usersLiveData.observe(viewLifecycleOwner, observerPopulateList)
     }
 
-    private fun populateWithData(userList: MutableList<GithubUser?>) {
+    private fun populateWithData(userList: List<GithubUser?>?) {
         rv_github_users.adapter =
             UserAdapter(userList) { userItem: GithubUser -> userItemClicked(userItem) }
         setupLayoutManager()
     }
 
     private fun userItemClicked(item: GithubUser) {
-        requireContext().pop("Clicked: ${item.name}")
+        //requireContext().pop("Clicked: ${item.name}")
         communicator.startDetailFragmentWith(item)
-    }
-
-    override fun onDestroy() {
-        viewModel.cancelAllRequests()
-        super.onDestroy()
     }
 }

@@ -1,15 +1,15 @@
 package com.sam43.githubusers.repositories
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import com.sam43.githubusers.App.Companion.applicationContext
 import com.sam43.githubusers.cache.database.CacheDatabase
 import com.sam43.githubusers.models.GithubUser
 import com.sam43.githubusers.services.BaseRepository
 import com.sam43.githubusers.services.ServiceApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 open class UserRepo(private val api : ServiceApi): BaseRepository() {
-
-    open var userListLiveData: MutableList<GithubUser?>? = mutableListOf()
 
     private var appDB: CacheDatabase? = null
 
@@ -23,16 +23,22 @@ open class UserRepo(private val api : ServiceApi): BaseRepository() {
             call = { api.getUserListAsync().await() },
             errorMessage = "Error Fetching users list"
         )
-        userListLiveData = if (response !== null) response.toMutableList() else mutableListOf()
-        return response?.toMutableList()
+        val userListLiveData: MutableList<GithubUser?>? =
+            if (response !== null) response.toMutableList() else mutableListOf()
+        insertUserListToCacheDB(response?.toMutableList())
+        return userListLiveData
     }
 
-    fun getGithubUserListOffline(): LiveData<MutableList<GithubUser?>?>? {
-        var liveData: LiveData<MutableList<GithubUser?>?>?
-        appDB?.githubUserDao?.getAllUsers().let {
-            liveData = it
+    private suspend fun insertUserListToCacheDB(list: MutableList<GithubUser?>?) {
+        list?.let { users ->
+            withContext(Dispatchers.IO) {
+                appDB?.githubUserDao?.insertUserList(users)
+                Log.d("Local_cache", "data inserted")
+            }
         }
-        return liveData
     }
 
+    fun getGithubUserListOffline(): MutableList<GithubUser?>? {
+        return appDB?.githubUserDao?.getAllUsers()?.toMutableList() ?: mutableListOf()
+    }
 }
