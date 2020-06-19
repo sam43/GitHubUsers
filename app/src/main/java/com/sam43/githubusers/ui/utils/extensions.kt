@@ -56,7 +56,7 @@ fun Context.loadUserAvatar(url: String?, holder: ImageView) {
 fun Context.pop(msg: String) =
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
-fun <T> Context.openActivity(it: Class<T>, extras: Bundle.() -> Unit = {}) {
+inline fun <T> Context.openActivity(it: Class<T>, extras: Bundle.() -> Unit = {}) {
     val intent = Intent(this, it)
     intent.putExtras(Bundle().apply(extras))
     startActivity(intent)
