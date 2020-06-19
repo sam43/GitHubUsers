@@ -18,6 +18,12 @@ import com.sam43.githubusers.ui.utils.getViewModel
 import com.sam43.githubusers.ui.utils.pop
 import kotlinx.android.synthetic.main.user_list_fragment.*
 
+/*
+* Author: Saadat Sayem
+* Software Engineer - Android
+* Date: 19/6/2020
+* */
+
 
 class UserListFragment : Fragment() {
 
