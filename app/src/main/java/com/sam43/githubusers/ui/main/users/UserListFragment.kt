@@ -15,6 +15,7 @@ import com.sam43.githubusers.services.ApiFactory
 import com.sam43.githubusers.ui.communicators.Communicator
 import com.sam43.githubusers.ui.main.adapters.UserAdapter
 import com.sam43.githubusers.ui.utils.getViewModel
+import com.sam43.githubusers.ui.utils.isInternetConnected
 import com.sam43.githubusers.ui.utils.pop
 import kotlinx.android.synthetic.main.user_list_fragment.*
 
@@ -42,15 +43,17 @@ class UserListFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.user_list_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.fetchUsers()
         communicator = context as Communicator
+        viewModel.fetchUsers()
     }
 
     private fun setupLayoutManager() {
@@ -67,19 +70,23 @@ class UserListFragment : Fragment() {
 
     private val observerPopulateList = Observer<List<GithubUser?>?> {
         Log.d("GithubUsers", "data: ${it?.get(0)}")
-        populateWithData(it)
+        if (it?.isNotEmpty() as Boolean) {
+            populateWithData(it)
+        } else
+            requireContext().pop("No data found!")
     }
 
-    private val observerCheckConnection = Observer<Boolean> { isConnected ->
-        if (!isConnected) {
-            requireContext().pop("Waiting for internet connection")
-        } else
-            requireContext().pop("Connected")
-    }
 
     private fun callViewModelMethods() {
-        viewModel.isInternetConnectedLiveData.observe(viewLifecycleOwner, observerCheckConnection)
+        checkIfConnectedToInternetOrNot()
         viewModel.usersLiveData.observe(viewLifecycleOwner, observerPopulateList)
+    }
+
+    private fun checkIfConnectedToInternetOrNot() {
+        if (!isInternetConnected())
+            requireContext().pop("Waiting for internet connection")
+        else
+            requireContext().pop("Connected")
     }
 
     private fun populateWithData(userList: List<GithubUser?>?) {
@@ -89,7 +96,6 @@ class UserListFragment : Fragment() {
     }
 
     private fun userItemClicked(item: GithubUser) {
-        //requireContext().pop("Clicked: ${item.name}")
         communicator.startDetailFragmentWith(item)
     }
 }

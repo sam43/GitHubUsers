@@ -38,7 +38,7 @@ open class UserRepo(private val api : ServiceApi): BaseRepository() {
         }
     }
 
-    fun getGithubUserListOffline(): MutableList<GithubUser?>? {
+    suspend fun getGithubUserListOffline(): MutableList<GithubUser?>? {
         return appDB?.githubUserDao?.getAllUsers()?.toMutableList() ?: mutableListOf()
     }
 }

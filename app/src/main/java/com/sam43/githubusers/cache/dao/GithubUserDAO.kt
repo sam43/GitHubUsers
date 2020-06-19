@@ -1,6 +1,5 @@
 package com.sam43.githubusers.cache.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,11 +14,8 @@ interface GithubUserDAO {
     // DAO doesn't work with MutableList
 
     @Query("SELECT * FROM GithubUser")
-    fun getAllUsers(): List<GithubUser?>
-
-    @Query("SELECT * FROM GithubUser LIMIT :limit OFFSET :offset")
-    fun getPaginatedUserList(offset: Int, limit: Int): LiveData<MutableList<GithubUser?>?>?
+    suspend fun getAllUsers(): List<GithubUser?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUserList(gitHubUsers: MutableList<GithubUser?>?)
+    suspend fun insertUserList(gitHubUsers: MutableList<GithubUser?>?)
 }
