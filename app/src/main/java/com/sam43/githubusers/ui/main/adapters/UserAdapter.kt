@@ -1,42 +1,58 @@
 package com.sam43.githubusers.ui.main.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sam43.githubusers.R
+import com.sam43.githubusers.databinding.ItemGithubUserBinding
 import com.sam43.githubusers.models.GithubUser
-import com.sam43.githubusers.ui.utils.loadUserAvatar
-import kotlinx.android.synthetic.main.item_github_user.view.*
 
-class UserAdapter(private val userList: MutableList<GithubUser?>) :
+
+@Suppress("UNCHECKED_CAST")
+class UserAdapter(
+    private val userList: List<GithubUser?>?,
+    private val clickListener: (GithubUser) -> Unit
+) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
-    private lateinit var context: Context
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        context = parent.context
-        val itemView = LayoutInflater.from(parent.context).inflate(
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
+        UserViewHolder(
+            DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
             R.layout.item_github_user,
-            parent, false
+            parent,
+            false
+            )
         )
-        return UserViewHolder(itemView)
-    }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val currentItem = userList[position]
-        context.loadUserAvatar(currentItem?.owner?.avatar_url, holder.userAvatar)
-        holder.userID.text = currentItem?.id.toString()
-        holder.userName.text = currentItem?.name
-        holder.userFullName.text = currentItem?.full_name
+        val item = userList?.get(position)
+        holder.itemGithubUserBinding.user = item
+        holder.bind(item, clickListener as (GithubUser?) -> Unit)
     }
 
-    override fun getItemCount() = userList.size
-    class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val userAvatar: ImageView = itemView.user_avatar
-        val userID: TextView = itemView.user_id
-        val userName: TextView = itemView.user_name
-        val userFullName: TextView = itemView.user_full_name
+    override fun getItemCount(): Int {
+        return if (!userList.isNullOrEmpty()) userList.size else 0
+    }
+
+    inner class UserViewHolder(val itemGithubUserBinding: ItemGithubUserBinding) :
+        RecyclerView.ViewHolder(itemGithubUserBinding.root)
+    {
+        fun bind(item: GithubUser?, clickListener: (GithubUser?) -> Unit) {
+            itemView.setOnClickListener { clickListener(item)}
+        }
+
+    }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("imageUrl")
+        fun loadUserAvatar(imageView: ImageView, url: String) {
+            Glide.with(imageView).load(url).into(imageView) // "https://i.imgur.com/4i4EYJ7.jpg"
+        }
     }
 }

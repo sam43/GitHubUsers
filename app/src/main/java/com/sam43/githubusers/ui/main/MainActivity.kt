@@ -1,11 +1,17 @@
 package com.sam43.githubusers.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.sam43.githubusers.R
+import com.sam43.githubusers.models.GithubUser
+import com.sam43.githubusers.ui.communicators.Communicator
+import com.sam43.githubusers.ui.main.details.UserDetailsFragment
 import com.sam43.githubusers.ui.main.users.UserListFragment
+import java.io.Serializable
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    Communicator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,5 +21,19 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.container, UserListFragment.newInstance())
                     .commitNow()
         }
+    }
+
+    override fun startDetailFragmentWith(value: GithubUser) {
+        val bundle = Bundle()
+        bundle.putSerializable("user", value as Serializable)
+
+        val transaction = supportFragmentManager.beginTransaction()
+        val detailsFragment = UserDetailsFragment.newInstance()
+        detailsFragment.arguments = bundle
+
+        transaction.replace(R.id.container, detailsFragment)
+        transaction.addToBackStack(null)
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        transaction.commit()
     }
 }

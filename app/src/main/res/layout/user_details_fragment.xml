@@ -1,13 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.details.UserDetailsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ImageView
+        android:id="@+id/ivUserAvatar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="24dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/detail_page_user_info" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvGithubID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="8dp"
+        tools:text="101"
+        android:textSize="14sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="@+id/ivUserAvatar"
+        app:layout_constraintStart_toStartOf="@+id/ivUserAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/ivUserAvatar" />
+
+    <TextView
+        android:id="@+id/tvGithubName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        tools:text="name"
+        android:textSize="16sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="@+id/ivUserAvatar"
+        app:layout_constraintStart_toStartOf="@+id/ivUserAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tvGithubID" />
+
+    <TextView
+        android:id="@+id/tvGithubFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        tools:text="Full Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="@+id/ivUserAvatar"
+        app:layout_constraintStart_toStartOf="@+id/ivUserAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tvGithubName" />
+
+    <Button
+        android:id="@+id/btnProfileLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/btn_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileUrl" />
+
+    <TextView
+        android:id="@+id/tvProfileUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autoLink="web"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivUserAvatar"
+        app:layout_constraintStart_toStartOf="@+id/ivUserAvatar"
+        tools:text="profile url"
+        app:layout_constraintTop_toBottomOf="@+id/tvGithubFullName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
